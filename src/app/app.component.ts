@@ -9,18 +9,16 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/materi
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  snomedService: SnomedService;
   result = [];
   snomedForm: FormGroup = new FormGroup({
     search: new FormControl()
   });
   selected = [];
 
-  constructor(snomedService: SnomedService) {
-    this.snomedService = snomedService;
+  constructor(private snomedService: SnomedService) {
   }
 
   ngOnInit() {
