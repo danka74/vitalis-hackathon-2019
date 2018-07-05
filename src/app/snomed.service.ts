@@ -11,7 +11,7 @@ export class SnomedService {
 
     if (term && term.length > 0) {
       return this.http.get('http://127.0.0.1:3000/snomed/se-edition/v20171130/descriptions?query=' + encodeURIComponent(term)
-        + '&groupByConcept=1&returnLimit=10' + (refset ? '&refsetFilter=' + refset : ''));
+        + '&groupByConcept=1&returnLimit=10&collation=sv' + (refset ? '&refsetFilter=' + refset : ''));
     } else {
         return [];
     }
