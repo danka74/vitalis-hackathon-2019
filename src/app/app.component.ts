@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SnomedService } from './snomed.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
         filter(text => text.length > 2),
         debounceTime(10),
         distinctUntilChanged(),
-        switchMap(text => this.snomedService.search(text, '46051000052106'))
+        switchMap(text => this.snomedService.search(text))// , '46051000052106'))
       );
     typeahead.subscribe(data => {
       // console.log(data);
