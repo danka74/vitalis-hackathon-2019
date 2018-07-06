@@ -1,0 +1,28 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Snomed CT-val
+  </h1>
+</div>
+<form [formGroup]="snomedForm" class="snomed-form">
+
+  <mat-form-field class="full-width">
+    <mat-chip-list #chipList>
+        <mat-chip *ngFor="let concept of selected"
+            (removed)="remove(concept)">
+          {{concept}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <input type="text" placeholder="Snomed CT-begrepp" matInput formControlName="search" [matAutocomplete]="auto"
+      [matChipInputFor]="chipList" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="clear($event)">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption (optionSelected)="select($event)">
+      <mat-option *ngFor="let term of result" [value]="term">
+        {{ term }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+    <mat-checkbox formControlName="limitToRefset" (click)="onLimit()">begränsa till urvalet levnadsvanor</mat-checkbox>
+
+</form>
