@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
@@ -10,8 +10,14 @@ export class SnomedService {
   search(term: string, refset?: string): any {
 
     if (term && term.length > 0) {
-      return this.http.get('http://127.0.0.1:3000/snomed/se-edition/v20171130/descriptions?query=' + encodeURIComponent(term)
-        + '&lang=swedish&langFilter=swedish&groupByConcept=1&returnLimit=10&collation=sv' + (refset ? '&refsetFilter=' + refset : ''));
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        })
+       };
+      return this.http.get('http://localhost:8080/MAIN%2FSNOMEDCT-SE/concepts?activeFilter=true&offset=0&limit=50&term='
+        + encodeURIComponent(term), httpOptions);
     } else {
         return [];
     }
