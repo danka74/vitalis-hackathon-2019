@@ -17,7 +17,9 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-
-    <mat-checkbox formControlName="limitToRefset" (click)="onLimit()">begränsa till urvalet levnadsvanor</mat-checkbox>
+  <!-- <mat-checkbox formControlName="limitToECL" (click)="onLimit()">begränsa urvalet</mat-checkbox> -->
+  <mat-form-field class="full-width">
+    <input  matInput type="text" placeholder="ECL" formControlName="ecl">
+  </mat-form-field>
 
 </form>

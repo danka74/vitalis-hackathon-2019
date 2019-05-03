@@ -14,7 +14,8 @@ export class SnomedAutocompleteComponent implements OnInit {
   result = [];
   snomedForm: FormGroup = new FormGroup({
     search: new FormControl(),
-    limitToRefset: new FormControl()
+    // limitToECL: new FormControl(),
+    ecl: new FormControl()
   });
   selected = [];
   typeaheadSubscription: Subscription = null;
@@ -25,18 +26,20 @@ export class SnomedAutocompleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.snomedForm.get('limitToRefset').value);
     const typeahead = this.snomedForm.get('search').valueChanges
       .pipe(
         filter(text => text.length > 2),
         debounceTime(10),
         distinctUntilChanged(),
-        switchMap(text => this.snomedService.search(text, this.snomedForm.get('limitToRefset').value ? '46051000052106' : null))
+        switchMap(text => this.snomedService.search(text, this.snomedForm.get('ecl').value))
       );
     this.typeaheadSubscription = typeahead.subscribe(data => {
       // console.log(data);
       this.result = [];
-      data['matches'].forEach(element => this.result.push(element['conceptId'] + ' | ' + element['term'] + ' |'));
+      console.log(data);
+      if(data['expansion']['contains']) {
+        data['expansion']['contains'].forEach(element => this.result.push(element['code'] + ' | ' + element['display'] + ' |'));
+      }
       });
   }
 

@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class SnomedService {
 
-  readonly baseUrl: string = "http://localhost:8080/fhir/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/";
+  readonly baseUrl: string = "http://localhost:4200/fhir/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/";
 
   constructor(private http: HttpClient) { }
 
@@ -14,13 +14,13 @@ export class SnomedService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Accept': 'en'
+        'Accept-Language': 'sv'
       })
     };
-
+    console.log(ecl);
     if (term && term.length > 0) {
       return this.http.get(this.baseUrl +
-         encodeURIComponent(ecl) +
+         (ecl !== null ? encodeURIComponent(ecl) : '<<404684003') + // default to Clinical finding
          '&filter=' +
          encodeURIComponent(term));
     } else {
