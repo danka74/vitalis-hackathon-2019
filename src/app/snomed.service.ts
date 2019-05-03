@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
 export class SnomedService {
 
+  readonly baseUrl: string = "http://localhost:8080/fhir/ValueSet/$expand?url=http://snomed.info/sct?fhir_vs=ecl/";
+
   constructor(private http: HttpClient) { }
 
-  search(term: string, refset?: string): any {
+  search(term: string, ecl: string): any {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept': 'en'
+      })
+    };
 
     if (term && term.length > 0) {
-      return this.http.get('http://127.0.0.1:3000/snomed/se-edition/v20171130/descriptions?query=' + encodeURIComponent(term)
-        + '&lang=swedish&langFilter=swedish&groupByConcept=1&returnLimit=10&collation=sv' + (refset ? '&refsetFilter=' + refset : ''));
+      return this.http.get(this.baseUrl +
+         encodeURIComponent(ecl) +
+         '&filter=' +
+         encodeURIComponent(term));
     } else {
         return [];
     }
