@@ -37,9 +37,7 @@ export class SnomedAutocompleteComponent implements OnInit {
       // console.log(data);
       this.result = [];
       console.log(data);
-      if(data['expansion']['contains']) {
-        data['expansion']['contains'].forEach(element => this.result.push(element['code'] + ' | ' + element['display'] + ' |'));
-      }
+      this.result.push(data);
       });
   }
 
